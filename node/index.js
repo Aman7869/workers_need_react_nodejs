@@ -3,7 +3,6 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 var express = require('express');
 var ObjectId = require('mongodb').ObjectId;
-// var mysql = require('mysql');
 var cors = require('cors');
 const multer = require('multer');
 const path = require('path');
