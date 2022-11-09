@@ -82,10 +82,52 @@ function profile_submit(req, response) {
         });
     });
 }
+function admin(req, res) {
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        dbo.collection("registration").find({}).toArray(function (err, result) {  // for find all
+            if (err) throw err;
+            if (result.length > 0) {
+                res.send({
+                    result: result
+                });
+            } else {
+                res.send({ message: 401 })
+            }
+            db.close();
+        });
+    });
+}
+
+function admin_edit(req, res) {
+    const { id } = req.body;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        // var query = { _id: id };
+        var query = { _id: ObjectId(id) };
+        console.log(id);
+        dbo.collection("registration").find(query).toArray(function (err, result) {
+            if (err) throw err;
+            if (result.length > 0) {
+                res.send({
+                    result: result
+                });
+            } else {
+                res.send({ message: 401 })
+            }
+            console.log(result);
+            db.close();
+        });
+    });
+}
 
 module.exports = {
     register: register,
     login,
     profile,
     profile_submit,
+    admin,
+    admin_edit,
 };
