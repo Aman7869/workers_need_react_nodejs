@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 // import { useHistory  } from 'react-router-dom';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
+import  HomeCards  from "./HomeCards";
 // import swal from 'sweetalert';
 
 function Home() {
@@ -13,14 +14,14 @@ function Home() {
     // alert("Hello");
     document.location.href = "/login";
     // navigate('/login', { replace: true });
-        // history.push('login');
-}
+    // history.push('login');
+  }
   var image1 = "images/labourslid.jpg";
   var image2 = "images/plumber.jpg";
   var image3 = "images/tree3.jpg";
-  return ( 
+  return (
     <>
-                <Helmet><title>Home</title></Helmet>
+      <Helmet><title>Home</title></Helmet>
       <div id="carouselExampleCaptions" className="carousel slide " data-bs-ride="carousel" >
         <div className="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -59,6 +60,22 @@ function Home() {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
+      </div>
+      <div className='row'>
+      {/* 
+      <div className="card" style={{ width: "18rem", marginLeft: "100px" }}>
+        <img className="card-img-top" src={"images/animal1.jpeg"} alt="Card image cap" />
+        <div className="card-body">
+          <h5 className="card-title">Painter</h5>
+          <a href="#" className="btn btn-primary">Go somewhere</a>
+        </div>
+      </div> */}
+      <HomeCards imagePath = {"images/animal1.jpeg"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} />
       </div>
     </>
   );
