@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
@@ -27,10 +27,11 @@ function Admin() {
         add_dob: '',
     });
     const email_ss = sessionStorage.getItem('email');
-    const history = useHistory();
+    // const history = useHistory();
 
     if (!sessionStorage.getItem("email")) {
-        history.push('login');
+        document.location.href = "/login";
+        // history.push('login');
     }
     if (userInfo == "") {
         axios.post(`http://localhost:3000/admin`).then(res => {

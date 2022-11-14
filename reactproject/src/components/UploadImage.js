@@ -1,17 +1,19 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import swal from 'sweetalert';
-import { useHistory } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+// import { useHistory } from 'react-router-dom';
 
 function UploadImage() {
     // const [picture, setPicture] = useState([]);
     const [file, setFile] = useState();
     const [fileName, setFileName] = useState("");
     const email_ss = sessionStorage.getItem('email');
-    const history = useHistory();
+    // const history = useHistory();
 
     if (!sessionStorage.getItem("email")) {
-        history.push('login');
+        document.location.href = "/login";
+        // history.push('login');
     }
     const handleImage = (e) => {
         setFile(e.target.files[0]);
@@ -39,7 +41,9 @@ function UploadImage() {
     }
 
     return (
+        
         <div className="container">
+            <Helmet><title>Upload</title></Helmet>
             <form onSubmit={submitproduct} encType="multipart/form-data">
                 <h1>Please upload your image </h1>
                 <div className="col-sm-4">

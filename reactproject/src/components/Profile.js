@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Helmet } from "react-helmet";
 function Profile() {
-    const history = useHistory();
+    // const history = useHistory();
     const email_ss = sessionStorage.getItem('email');
     console.log(email_ss);
     const [picture, setPicture] = useState();
@@ -21,7 +21,8 @@ function Profile() {
     )
     // console.log(email_ss);
     if (!sessionStorage.getItem("email")) {
-        history.push('login');
+        document.location.href = "/login";
+        // history.push('login');
     }
     const data = {
         email: email_ss,

@@ -1,16 +1,19 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useHistory  } from 'react-router-dom';
+// import { useHistory  } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 // import swal from 'sweetalert';
 
 function Home() {
-  const history = useHistory();
-  // const navigate = useNavigate();
+  // const history = useHistory();
+  const navigate = useNavigate();
 
   if (!sessionStorage.getItem("email")) {
-    // navigate('login');
-        history.push('login');
+    // alert("Hello");
+    document.location.href = "/login";
+    // navigate('/login', { replace: true });
+        // history.push('login');
 }
   var image1 = "images/labourslid.jpg";
   var image2 = "images/plumber.jpg";

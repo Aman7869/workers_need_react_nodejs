@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Helmet } from "react-helmet";
 
 function Login() {
 
-    const history = useHistory();
+    // const history = useHistory();
     const [registerInput, setRegister] = useState({
         email: '',
         password: '',

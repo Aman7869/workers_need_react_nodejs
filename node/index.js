@@ -71,21 +71,6 @@ app.post('/image_upload', upload.single('image'), (req, response) => {
 
 app.post('/admin', (req, res) => {
     customApi.admin(req, res);
-    // MongoClient.connect(url, function (err, db) {
-    //     if (err) throw err;
-    //     var dbo = db.db("workers_need");
-    //     dbo.collection("registration").find({}).toArray(function (err, result) {  // for find all
-    //         if (err) throw err;
-    //         if (result.length > 0) {
-    //             res.send({
-    //                 result: result
-    //             });
-    //         } else {
-    //             res.send({ message: 401 })
-    //         }
-    //         db.close();
-    //     });
-    // });
 });
 
 
