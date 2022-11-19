@@ -1,13 +1,17 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function HomeCards(props) {
+    const navigate = useNavigate();
+    function redirect_function(){
+        navigate('/service');
+    }
     return (
         <>
-            <div className="card" style={{ width: "18rem", marginLeft: "135px", marginTop: "20px" }}>
-                <img className="card-img-top" src={props.imagePath} alt="Card image cap" />
+            <div className="card" style={{ width: "18rem", marginLeft: "135px", marginTop: "20px" }} onClick={redirect_function}>
+                <img className="card-img-top" src={props.imagePath} alt="Card image cap" height={"200px"} />
                 <div className="card-body">
-                    <h5 className="card-title">Painter</h5>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
+                    <h5 className="card-title">{props.title}</h5>
                 </div>
             </div>
         </>

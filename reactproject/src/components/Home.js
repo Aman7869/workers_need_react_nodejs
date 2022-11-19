@@ -7,18 +7,15 @@ import  HomeCards  from "./HomeCards";
 // import swal from 'sweetalert';
 
 function Home() {
-  // const history = useHistory();
   const navigate = useNavigate();
-
   if (!sessionStorage.getItem("email")) {
-    // alert("Hello");
     document.location.href = "/login";
     // navigate('/login', { replace: true });
-    // history.push('login');
   }
   var image1 = "images/labourslid.jpg";
   var image2 = "images/plumber.jpg";
   var image3 = "images/tree3.jpg";
+ 
   return (
     <>
       <Helmet><title>Home</title></Helmet>
@@ -62,20 +59,12 @@ function Home() {
         </button>
       </div>
       <div className='row'>
-      {/* 
-      <div className="card" style={{ width: "18rem", marginLeft: "100px" }}>
-        <img className="card-img-top" src={"images/animal1.jpeg"} alt="Card image cap" />
-        <div className="card-body">
-          <h5 className="card-title">Painter</h5>
-          <a href="#" className="btn btn-primary">Go somewhere</a>
-        </div>
-      </div> */}
-      <HomeCards imagePath = {"images/animal1.jpeg"} />
-      <HomeCards imagePath = {"images/animal1.jpeg"} />
-      <HomeCards imagePath = {"images/animal1.jpeg"} />
-      <HomeCards imagePath = {"images/animal1.jpeg"} />
-      <HomeCards imagePath = {"images/animal1.jpeg"} />
-      <HomeCards imagePath = {"images/animal1.jpeg"} />
+      <HomeCards imagePath = {"images/plumber.jpg"} title={"Plumber"} />
+      <HomeCards imagePath = {"images/painter.jpg"} title={"Painter"} />
+      <HomeCards imagePath = {"images/Maid.jpg"} title={"Maid"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} title={"Rough"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} title={"Rough"} />
+      <HomeCards imagePath = {"images/animal1.jpeg"} title={"Rough"} />
       </div>
     </>
   );
