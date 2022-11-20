@@ -28,7 +28,6 @@ function Registration() {
 
     const registerSubmit = (e) => {
         e.preventDefault();
-
         if (validate(registerInput)) {
             const data = {
                 name: registerInput.name,
@@ -39,8 +38,13 @@ function Registration() {
             }
             console.log("data");
             console.log(data);
-
-
+            if(data.user == "2"){
+                console.log("user= 2");
+                axios.post(`http://localhost:3000/workers_table`, data).then(res => {
+                    if (res.data.message) {
+                     }
+                })
+            }
             axios.post(`http://localhost:3000/register`, data).then(res => {
                 // alert(res.data.message);
                 if (res.data.message) {
@@ -48,7 +52,6 @@ function Registration() {
                     // history.push('/login');
                     document.location.href = "/login";
                 }
-
             })
                 .catch(err => {
                     console.log(err);
@@ -96,8 +99,6 @@ function Registration() {
 
     return (
         <>
-
-
             <Helmet><title>Registration</title></Helmet>
             <div className="App">
                 <div className="container-fluid row" >
@@ -133,10 +134,7 @@ function Registration() {
                                     <option value="2">Worker</option>
                                 </select>
                             </div>
-
-
                             <br />
-
                             <input type="submit" value="Submit" className="btn btn-primary col-sm-5" style={{ marginLeft: "230px" }} />
                         </form>
                     </div>

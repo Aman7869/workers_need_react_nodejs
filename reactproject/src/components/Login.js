@@ -36,8 +36,11 @@ function Login() {
                     if (res.data.email === "aman@gmail.com") {
                         sessionStorage.setItem('admin_email', res.data.email);
                     }
+                    console.log(res);
+                    if (res.data.user == "2") {
+                        sessionStorage.setItem('user', res.data.user);
+                    }
                     swal("Success", "Successfully loggedin", "success");
-                    // history.push('/home');
                     document.location.href = "/home";
                 } else {
                     swal("Error", "User not found", "error").then(() => {

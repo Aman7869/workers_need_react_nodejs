@@ -14,18 +14,23 @@ function Navbar() {
     const logoutSubmit = (e) => {
         e.preventDefault();
         sessionStorage.removeItem('email');
-        sessionStorage.removeItem('admin_email');   
+        sessionStorage.removeItem('admin_email');
+        sessionStorage.removeItem('user');
         document.location.href = "/login";
 
     }
     var admin = '';
-     if (sessionStorage.getItem("admin_email")) {
-              admin = (      <li className="nav-item">
-                        <Link exact activeClassName="active  " className="nav-link " aria-current="page" to="/admin">Admin</Link>
-                    </li>
-              )
-     }
-                
+    var wprofile = '';
+    if (sessionStorage.getItem("admin_email")) {
+        admin = (<li className="nav-item">
+            <Link exact activeClassName="active  " className="nav-link " aria-current="page" to="/admin">Admin</Link>
+        </li>
+        )
+    }
+    if (sessionStorage.getItem("user") == "2") {
+        wprofile =(<NavDropdown.Item href="workers_profile">Work .Profile</NavDropdown.Item>)
+    }
+
     var AuthButtons = '';
     // console.log(localStorage.getItem("email"));
     if (!sessionStorage.getItem("email")) {
@@ -46,13 +51,13 @@ function Navbar() {
 
             <ul className="navbar-nav" style={{ marginLeft: '20cm' }}>
                 <li className="nav-item">
-                    <Link exact  className="nav-link " to="/home">Home</Link>
+                    <Link exact className="nav-link " to="/home">Home</Link>
                 </li>
                 <li className="nav-item">
                     <NavLink exact className="nav-link " to="/profile">Profile</NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink   className="nav-link " aria-current="page" to="/upload">Upload</NavLink>
+                    <NavLink className="nav-link " aria-current="page" to="/upload">Upload</NavLink>
                 </li>
                 {/* if (!sessionStorage.getItem("admin_email")) {
                     <li className="nav-item">
@@ -60,25 +65,25 @@ function Navbar() {
                     </li>
                 } */}
                 {admin}
-                
+
                 <NavDropdown title="Workers" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+                  {wprofile}
+                    <NavDropdown.Item href="#action/3.2">
+                        Another action
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action/3.4">
+                        Separated link
+                    </NavDropdown.Item>
+                </NavDropdown>
                 <li className="nav-item">
                     <button type="button" data-toggle="modal" data-target="#myModal" className="btn btn-danger">Logout</button>
                 </li>
             </ul>
         );
     }
-    
+
 
 
     return (

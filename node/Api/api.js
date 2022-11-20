@@ -31,15 +31,16 @@ function login(req, res) {
         var query = { email: email, password: password };
         dbo.collection("registration").find(query).toArray(function (err, result) {
             if (err) throw err;
-            console.log('result');
-            console.log(result);
+            // console.log('result');
+            // console.log(result);
+            // console.log(result[0]['user']);
             // console.log("User",result[0].user);
             if (result.length > 0) {
-                res.send({ message: 400, email: email });
+                res.send({ message: 400, email: email, user: result[0]['user'] });
             } else {
                 res.send({ message: 401 })
             }
-            console.log(result);
+            // console.log(result);
             db.close();
         });
     });
@@ -123,6 +124,62 @@ function admin_edit(req, res) {
     });
 }
 
+
+function workers_table(req, response) {
+    console.log("workers_table");
+    console.log(req.body);
+    const { name, email, password, dob, user } = req.body;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        var myobj = { name: name, email: email, password: password, dob: dob, user: user };
+        dbo.collection("workers_table").insertOne(myobj, function (err, res) {
+            if (err) throw err;
+            response.status(200).send({
+                message: 'Successfully Register'
+            });
+            console.log("1 document inserted");
+            db.close();
+        });
+    });
+}
+
+function workers_profile(req, res) {
+    const { email } = req.body;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        var query = { email: email };
+        dbo.collection("workers_table").find(query).toArray(function (err, result) {
+            if (err) throw err;
+            if (result.length > 0) {
+                res.send({
+                    result: result
+                });
+            } else {
+                res.send({ message: 401 })
+            }
+            console.log(result);
+            db.close();
+        });
+    });
+}
+function workers_profile_submit(req, response) {
+    const { name, email, dob, id, phone } = req.body;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        var myquery = { _id: ObjectId(id) };
+        var newvalues = { $set: { name: name, dob: dob, phone: phone } };
+        dbo.collection("workers_table").updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+            response.status(200).send({
+                message: 'Profiles edited successfully'
+            });
+            db.close();
+        });
+    });
+}
 module.exports = {
     register: register,
     login,
@@ -130,4 +187,7 @@ module.exports = {
     profile_submit,
     admin,
     admin_edit,
+    workers_table,
+    workers_profile,
+    workers_profile_submit,
 };

@@ -99,6 +99,17 @@ app.post('/admin_edit', (req, res) => {
     // });
 });
 
+app.post('/workers_table', (req, response) => {
+    customApi.workers_table(req, response);
+});
+app.post('/workers_profile', (req, response) => {
+    customApi.workers_profile(req, response);
+});
+app.post('/workers_profile_submit', (req, response) => {
+    console.log("workers_profile_submit");
+    customApi.workers_profile_submit(req, response);
+});
+
 app.post('/delete', (req, res) => {
     const { id } = req.body;
     // console.log(id);
