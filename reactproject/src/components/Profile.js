@@ -1,10 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-// import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Helmet } from "react-helmet";
 function Profile() {
-    // const history = useHistory();
     const email_ss = sessionStorage.getItem('email');
     console.log(email_ss);
     const [picture, setPicture] = useState();
@@ -17,12 +15,9 @@ function Profile() {
         id: "",
         phone: "",
         image: "",
-    }
-    )
-    // console.log(email_ss);
+    })
     if (!sessionStorage.getItem("email")) {
         document.location.href = "/login";
-        // history.push('login');
     }
     const data = {
         email: email_ss,
@@ -30,8 +25,6 @@ function Profile() {
     if (profileInput.id == "") {
         console.log("data", data);
         axios.post(`http://localhost:3000/profile`, data).then(res => {
-            // console.log(res.data);
-            // console.log(res.data.result[0].phone);
             setProfile({
                 name: res.data.result[0].name,
                 email: res.data.result[0].email,
@@ -39,17 +32,12 @@ function Profile() {
                 id: res.data.result[0]._id,
                 phone: res.data.result[0].phone,
                 image: res.data.result[0].images,
-
             });
-
         })
     }
-
-    // console.log("image" + profileInput.image);
     const handleInput = (e) => {
         e.persist();
         setProfile({ ...profileInput, [e.target.name]: e.target.value });
-
     }
     const profileSubmit = (e) => {
         e.preventDefault();
@@ -60,21 +48,17 @@ function Profile() {
                 dob: profileInput.dob,
                 id: profileInput.id,
                 phone: profileInput.phone,
-
-
             }
             axios.post(`http://localhost:3000/profile_submit`, data).then(res => {
                 if (res.data.message) {
                     swal("Success", res.data.message, "success").then(() => {
                         document.location.href = "/profile";
                     })
-
                 }
             })
                 .catch(err => {
                     console.log(err);
                 })
-
         }
     }
     const mystyle = {
@@ -82,7 +66,6 @@ function Profile() {
         left: "50%",
         top: "22%",
         color: "white",
-
     };
     const container_style = {
         backgroundColor: "#37517e",
@@ -117,21 +100,17 @@ function Profile() {
             errors.email = "This is not a valid email format!";
             formIsValid = false;
         }
-
         if (!values.dob) {
             errors.dob = "Dob is required!";
             formIsValid = false;
         }
-
         if (values.phone.length > 10) {
             errors.phone = "Please enter correct phone number";
             formIsValid = false;
         }
-
         setFormErrors(errors);
         return formIsValid;
     };
-
     return (
         <>
             <Helmet><title>Profie</title></Helmet>
@@ -150,8 +129,6 @@ function Profile() {
                             {displayPhone}
                         </div>
                     </div>
-
-
 
                 </div>
                 <div className='col-sm-4' style={mystyle}>

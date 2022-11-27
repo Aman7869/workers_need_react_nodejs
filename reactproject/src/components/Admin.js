@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-// import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
@@ -10,15 +9,13 @@ import { Helmet } from "react-helmet";
 function Admin() {
     const [userInfo, setUserData] = useState([]);
     const [formErrors, setFormErrors] = useState({});
-
     const [profileInput, setProfile] = useState({
         name: "",
         email: "",
         dob: "",
         id: "",
         phone: "",
-    }
-    )
+    })
     //  for add user
     const [registerInput, setRegister] = useState({
         add_name: '',
@@ -27,11 +24,8 @@ function Admin() {
         add_dob: '',
     });
     const email_ss = sessionStorage.getItem('email');
-    // const history = useHistory();
-
     if (!sessionStorage.getItem("email")) {
         document.location.href = "/login";
-        // history.push('login');
     }
     if (userInfo == "") {
         axios.post(`http://localhost:3000/admin`).then(res => {
@@ -49,7 +43,6 @@ function Admin() {
     const handleInput = (e) => {
         e.persist();
         setProfile({ ...profileInput, [e.target.name]: e.target.value });
-
     }
     const profileSubmit = (e) => {
         e.preventDefault();
@@ -60,57 +53,44 @@ function Admin() {
                 dob: profileInput.dob,
                 id: profileInput.id,
                 phone: profileInput.phone,
-
             }
             axios.post(`http://localhost:3000/profile_submit`, data).then(res => {
                 if (res.data.message) {
                     swal("Success", "Data edited successfully", "success").then(() => {
                         document.location.href = "/admin";
                     })
-
                 }
             })
                 .catch(err => {
                     console.log(err);
                 })
-
         }
     }
-
-
     // for add user
     const handleAddInput = (e) => {
         e.persist();
         setRegister({ ...registerInput, [e.target.name]: e.target.value });
     }
-
     const registerSubmit = (e) => {
         e.preventDefault();
         if (user_validate(registerInput)) {
             console.log("called");
-
             const data = {
                 name: registerInput.add_name,
                 email: registerInput.add_email,
                 password: registerInput.add_password,
                 dob: registerInput.add_dob,
             }
-
-
             axios.post(`http://localhost:3000/register`, data).then(res => {
-                // alert(res.data.message);
                 if (res.data.message) {
                     swal("Success", "User added successfully", "success").then(() => {
                         document.location.href = "/admin";
                     })
-
                 }
-
             })
                 .catch(err => {
                     console.log(err);
                 })
-
         }
     }
 
@@ -138,9 +118,6 @@ function Admin() {
             errors.phone = "Please enter correct phone number";
             formIsValid = false;
         }
-
-
-
         setFormErrors(errors);
         return formIsValid;
     };
@@ -159,46 +136,34 @@ function Admin() {
             errors.add_email = "This is not a valid email format!";
             formIsValid = false;
         }
-
         if (!values.add_password) {
             errors.add_password = "Password is required!";
             formIsValid = false;
         }
-
         if (!values.add_dob) {
             errors.add_dob = "Dob is required!";
             formIsValid = false;
         }
-
-
-
-
         setFormErrors(errors);
         return formIsValid;
     };
 
-
     var i = 0;
     var displayData = "";
     displayData = userInfo.map((item) => {
-        // console.log("item" + item.name);
-
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
-
         $(document).ready(function () {
             $('#deleteButton').on('click', function () {
                 console.log("function has called");
                 console.log($(this).data("id"));
             });
         });
-
         return (
             <>
                 <tr>
                     <td>{++i}</td>
-                    {/* <td>{item._id}</td> */}
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.dob}</td>
@@ -208,7 +173,6 @@ function Admin() {
                             onClick={(() => {
                                 const data = {
                                     id: item._id,
-
                                 }
                                 console.log(item._id);
                                 axios.post(`http://localhost:3000/admin_edit`, data).then(res => {
@@ -229,24 +193,17 @@ function Admin() {
                                 window.$('#exampleModal').modal('show')
                             })}
                         > Edit</button>
-
                         <button type="button" className="btn btn-danger" data-id={item._id} onClick={(() => {
                             setProfile({
                                 id: item._id,
                             });
                             window.$('#myModal1').modal('show');
-
                         })}>Delete</button>
-
                     </td>
                 </tr>
-
-
             </>
         )
     });
-
-
     return (
         <>
             <Helmet><title>Admin</title></Helmet>
@@ -274,7 +231,6 @@ function Admin() {
             </div>
 
             {/* for edit  */}
-
             <div className="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
@@ -287,40 +243,31 @@ function Admin() {
                             </button>
                         </div>
                         <div className="modal-body">
-
                             <div id="response">
                                 <div className="container">
                                     <h2 >Edit profile</h2>
                                     <form onSubmit={profileSubmit}>
-
                                         <div className="container-fluid my-4">
                                             <label htmlFor="name" >Name</label>
                                             <input type="hidden" name="id" id="uid" onChange={handleInput} value={profileInput.id} className="form-control" />
                                             <input type="text" name="name" id="name" onChange={handleInput} value={profileInput.name} className="form-control" placeholder="Enter name" />
                                             <span className="text-danger">{formErrors.name}</span>
-
                                         </div>
-
                                         <div className="container-fluid my-4" >
                                             <label htmlFor="email">Email</label>
                                             <input type="email" name="email" id="email" onChange={handleInput} value={profileInput.email} className="form-control" placeholder="Enter email" />
                                             <span className="text-danger">{formErrors.email}</span>
-
                                         </div>
                                         <div className="container-fluid my-4" >
                                             <label htmlFor="dob">Date of birth</label>
                                             <input type="date" name="dob" id="dob" onChange={handleInput} value={profileInput.dob} className="form-control" placeholder="Enter dob" />
                                             <span className="text-danger">{formErrors.dob}</span>
-
                                         </div>
-
                                         <div className="container-fluid my-4">
                                             <label htmlFor="phone">Phone number</label>
                                             <input type="number" name="phone" id="phone" onChange={handleInput} value={profileInput.phone} className="form-control" placeholder="Enter phone" />
                                             <span className="text-danger">{formErrors.phone}</span>
-
                                         </div>
-
                                         <div className="" style={{ marginLeft: "210px" }}>
                                             <input type="submit" className="btn btn-primary col-sm-7" value="Submit" />
                                         </div>
@@ -331,11 +278,8 @@ function Admin() {
                     </div>
                 </div>
             </div>
-
-
             {/* for logout modal */}
             <div className="container">
-
                 <div className="modal fade model-xl" id="myModal1" role="dialog">
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -351,9 +295,7 @@ function Admin() {
                                     console.log("data   yes", data)
                                     axios.post(`http://localhost:3000/delete`, data).then(res => {
                                         console.log(res.data.message);
-                                        // console.log(res);
                                         if (res.data.message) {
-
                                             swal({
                                                 title: "Success!",
                                                 text: "Data deleted successfully",
@@ -363,7 +305,6 @@ function Admin() {
                                             }).then(function () {
                                                 window.location.href = "/admin";
                                             });
-
                                         }
                                     });
                                 }
@@ -371,13 +312,9 @@ function Admin() {
                                 <button type="button" className="btn btn-default" data-dismiss="modal">No</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
-
             {/* for add user */}
             <div className="modal fade bd-example-modal-lg" id="AddexampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
@@ -415,10 +352,7 @@ function Admin() {
                                             <input type="date" name="add_dob" id="add_dob" onChange={handleAddInput} value={registerInput.add_dob} className="form-control" placeholder="Enter dob" />
                                             <span className="text-danger">{formErrors.add_dob}</span>
                                         </div>
-
-
                                         <br />
-
                                         <input type="submit" value="Submit" style={{ marginLeft: "200px" }} className="btn btn-primary col-sm-6" />
                                     </form>
                                 </div>
@@ -427,11 +361,7 @@ function Admin() {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
-
 export default Admin
-
-

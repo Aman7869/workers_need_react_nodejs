@@ -1,21 +1,17 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-// import { useHistory  } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import  HomeCards  from "./HomeCards";
-// import swal from 'sweetalert';
 
 function Home() {
   const navigate = useNavigate();
   if (!sessionStorage.getItem("email")) {
     document.location.href = "/login";
-    // navigate('/login', { replace: true });
   }
   var image1 = "images/labourslid.jpg";
   var image2 = "images/plumber.jpg";
   var image3 = "images/tree3.jpg";
- 
   return (
     <>
       <Helmet><title>Home</title></Helmet>
@@ -59,7 +55,7 @@ function Home() {
         </button>
       </div>
       <div className='row'>
-      <HomeCards imagePath = {"images/plumber.jpg"} title={"Plumber"} />
+      <HomeCards imagePath = {"images/plumber.jpg"} title={"Plumber"} wType={"plumber"} />
       <HomeCards imagePath = {"images/painter.jpg"} title={"Painter"} />
       <HomeCards imagePath = {"images/Maid.jpg"} title={"Maid"} />
       <HomeCards imagePath = {"images/animal1.jpeg"} title={"Rough"} />

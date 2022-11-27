@@ -20,19 +20,16 @@ function LearnFormik() {
                 if (res.data.message) {
                     swal("Success", res.data.message, "success");
                     console.log(res);
-                    // history.push('/login');
-                    // document.location.href = "/login";
                 }
-
             })
                 .catch(err => {
                     console.log(err);
                 })
             console.log(window.btoa(values.password));
-          
             action.resetForm();
         },
     })
+    values.name="Aman";  // for getting data and set to input fields
     return (
         <>
         <div className= "container">

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function HomeCards(props) {
     const navigate = useNavigate();
     function redirect_function(){
-        navigate('/service');
+        navigate('/service', {state: {wType: props.wType}});
     }
     return (
         <>

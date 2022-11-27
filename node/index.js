@@ -1,4 +1,3 @@
-
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 var express = require('express');
@@ -8,7 +7,6 @@ const multer = require('multer');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-
 app.use(express.json());
 app.use(cors());
 app.use(express.static("./public"));
@@ -28,11 +26,9 @@ app.post('/profile', (req, res) => {
     customApi.profile(req, res);
 });
 
-
 app.post('/profile_submit', (req, response) => {
     customApi.profile_submit(req, response);
 });
-
 
 //! Use of Multer
 var storage = multer.diskStorage({
@@ -50,7 +46,6 @@ var upload = multer({
     storage: storage
 });
 
-
 app.post('/image_upload', upload.single('image'), (req, response) => {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -59,7 +54,6 @@ app.post('/image_upload', upload.single('image'), (req, response) => {
         var newvalues = { $set: { images: req.file.filename } };
         dbo.collection("registration").updateOne(myquery, newvalues, function (err, res) {
             if (err) throw err;
-
             response.status(200).send({
                 message: 'Image updated successfully'
             });
@@ -68,35 +62,12 @@ app.post('/image_upload', upload.single('image'), (req, response) => {
     });
 });
 
-
 app.post('/admin', (req, res) => {
     customApi.admin(req, res);
 });
 
-
 app.post('/admin_edit', (req, res) => {
     customApi.admin_edit(req, res);
-
-    // const { id } = req.body;
-    // MongoClient.connect(url, function (err, db) {
-    //     if (err) throw err;
-    //     var dbo = db.db("workers_need");
-    //     // var query = { _id: id };
-    //     var query = { _id: ObjectId(id) };
-    //     console.log(id);
-    //     dbo.collection("registration").find(query).toArray(function (err, result) {
-    //         if (err) throw err;
-    //         if (result.length > 0) {
-    //             res.send({
-    //                 result: result
-    //             });
-    //         } else {
-    //             res.send({ message: 401 })
-    //         }
-    //         console.log(result);
-    //         db.close();
-    //     });
-    // });
 });
 
 app.post('/workers_table', (req, response) => {
@@ -108,6 +79,10 @@ app.post('/workers_profile', (req, response) => {
 app.post('/workers_profile_submit', (req, response) => {
     console.log("workers_profile_submit");
     customApi.workers_profile_submit(req, response);
+});
+app.post('/get_workers', (req, response) => {
+    console.log("get_workers");
+    customApi.get_workers(req, response);
 });
 
 app.post('/delete', (req, res) => {
@@ -147,8 +122,6 @@ app.post('/learn', (req, response) => {
         });
     });
 });
-
-
 
 console.log("Aman");
 app.listen(3000, () => {

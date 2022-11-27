@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-// import { useHistory } from 'react-router';
 import swal from 'sweetalert';
-// import Dropdown from 'react-bootstrap/Dropdown';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 function Navbar() {
-    // const history = useHistory();
     const logoutSubmit = (e) => {
         e.preventDefault();
         sessionStorage.removeItem('email');
@@ -32,7 +29,6 @@ function Navbar() {
     }
 
     var AuthButtons = '';
-    // console.log(localStorage.getItem("email"));
     if (!sessionStorage.getItem("email")) {
         AuthButtons = (
             <ul className="navbar-nav">

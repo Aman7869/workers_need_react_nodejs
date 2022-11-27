@@ -24,23 +24,17 @@ function register(req, response) {
 
 function login(req, res) {
     const { email, password } = req.body;
-    // console.log(req.body);
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("workers_need");
         var query = { email: email, password: password };
         dbo.collection("registration").find(query).toArray(function (err, result) {
             if (err) throw err;
-            // console.log('result');
-            // console.log(result);
-            // console.log(result[0]['user']);
-            // console.log("User",result[0].user);
             if (result.length > 0) {
                 res.send({ message: 400, email: email, user: result[0]['user'] });
             } else {
                 res.send({ message: 401 })
             }
-            // console.log(result);
             db.close();
         });
     });
@@ -106,7 +100,6 @@ function admin_edit(req, res) {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("workers_need");
-        // var query = { _id: id };
         var query = { _id: ObjectId(id) };
         console.log(id);
         dbo.collection("registration").find(query).toArray(function (err, result) {
@@ -164,18 +157,41 @@ function workers_profile(req, res) {
         });
     });
 }
+
 function workers_profile_submit(req, response) {
-    const { name, email, dob, id, phone } = req.body;
+    const { name, email, dob, id, phone, wType } = req.body;
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("workers_need");
         var myquery = { _id: ObjectId(id) };
-        var newvalues = { $set: { name: name, dob: dob, phone: phone } };
+        var newvalues = { $set: { name: name, dob: dob, phone: phone, wType: wType } };
         dbo.collection("workers_table").updateOne(myquery, newvalues, function (err, res) {
             if (err) throw err;
             response.status(200).send({
                 message: 'Profiles edited successfully'
             });
+            db.close();
+        });
+    });
+}
+
+function get_workers(req, res) {
+    console.log("body",req.body);
+    const { wType } = req.body;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        var query = { wType: wType };
+        dbo.collection("workers_table").find(query).toArray(function (err, result) {
+            if (err) throw err;
+            if (result.length > 0) {
+                res.send({
+                    result: result
+                });
+            } else {
+                res.send({ message: 401 })
+            }
+            console.log("result",result);
             db.close();
         });
     });
@@ -190,4 +206,5 @@ module.exports = {
     workers_table,
     workers_profile,
     workers_profile_submit,
+    get_workers,
 };
