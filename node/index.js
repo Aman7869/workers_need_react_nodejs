@@ -12,9 +12,40 @@ app.use(cors());
 app.use(express.static("./public"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 var customApi = require('./Api/api');
+var nodemailer = require('nodemailer');
+var http = require('http');
 
 app.post('/register', (req, response) => {
     customApi.register(req, response);
+    // ------------------Email working--------------------
+    // var { email } = req.body;
+    // var nodemailer = require('nodemailer');
+    // var admin_email = "7869215831amankaithwas@gmail.com";
+    // console.log(admin_email);
+    // console.log(email);
+    // var transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: admin_email,
+    //         pass: 'prvxfqkbrnhcpxbb'
+    //     }
+    // });
+
+    // var mailOptions = {
+    //     from: admin_email,
+    //     to: email,
+    //     subject: "Mail from Worker's need site.",
+    //     html: '<h1>Welcome</h1><p>This has been come from workers need project , You have been successfully register.!</p>'
+    //     // text: 'That was easy!'
+    // };
+    //     transporter.sendMail(mailOptions, function (error, info) {
+    //         if (error) {
+    //             console.log(error);
+    //         } else {
+    //             console.log('Email sent: ' + info.response);
+    //         }
+    //     });
+    // ------------------Email--------------------
     console.log("called after function called");
 });
 

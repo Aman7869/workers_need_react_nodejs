@@ -4,8 +4,8 @@ var url = "mongodb://localhost:27017/";
 var ObjectId = require('mongodb').ObjectId;
 
 function register(req, response) {
-    console.log("Aman");
-    console.log(req.body);
+    // console.log("Aman");
+    // console.log(req.body);
     const { name, email, password, dob, user } = req.body;
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
