@@ -9,6 +9,7 @@ import Admin from './components/Admin';
 import LearnFormik from './components/LearnFormik';
 import Service from './components/Service';
 import WorkersProfile from './components/WorkersProfile';
+import WorkersUpload from './components/WorkersUpload';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/service" element={<Service />} />
           <Route exact path="/workers_profile" element={<WorkersProfile />} />
+          <Route exact path="/workers_upload" element={<WorkersUpload />} />
         </Routes>
       </Router>
     </>

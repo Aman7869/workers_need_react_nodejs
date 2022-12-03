@@ -7,7 +7,8 @@ function WorkersProfile() {
     console.log(email_ss);
     const [picture, setPicture] = useState();
     const [formErrors, setFormErrors] = useState({});
-    const [file, setFile] = useState();
+    // const [file, setFile] = useState();
+    // const [fileName, setFileName] = useState("");
     const [profileInput, setProfile] = useState({
         name: "",
         email: "",
@@ -18,6 +19,7 @@ function WorkersProfile() {
         wType: "",
     }
     )
+
     if (!sessionStorage.getItem("email")) {
         document.location.href = "/login";
     }
@@ -42,6 +44,11 @@ function WorkersProfile() {
         e.persist();
         setProfile({ ...profileInput, [e.target.name]: e.target.value });
     }
+
+    // const handleImage = (e) => {
+    //     setFile(e.target.files[0]);
+    //     setFileName(e.target.files[0].name);
+    // };
     const profileSubmit = (e) => {
         e.preventDefault();
         console.log("wType", profileInput);
@@ -162,6 +169,10 @@ function WorkersProfile() {
                             <input type="date" name="dob" id="dob" onChange={handleInput} value={profileInput.dob} className="form-control" placeholder="Enter dob" />
                             <span className="text-white">{formErrors.dob}</span>
                         </div>
+                        {/* <div className="col-sm-7 my-4" >
+                            <label htmlFor="dob">Upload image</label>
+                            <input type="file" name="image" id="file" className="form-control" onChange={handleImage} />
+                        </div> */}
                         <div className="col-sm-7 my-4">
                             <label htmlFor="phone">Phone number</label>
                             <input type="number" name="phone" id="phone" onChange={handleInput} value={profileInput.phone} className="form-control" placeholder="Enter phone" />

@@ -32,13 +32,15 @@ function Login() {
                 // alert(res.data.message);
                 if (res.data.message === 400) {
                     sessionStorage.setItem('email', res.data.email);
-                    sessionStorage.setItem('user', "Aman");
+                    // sessionStorage.setItem('user', "Aman");
                     if (res.data.email === "aman@gmail.com") {
                         sessionStorage.setItem('admin_email', res.data.email);
                     }
                     console.log(res);
                     if (res.data.user == "2") {
                         sessionStorage.setItem('user', res.data.user);
+                    } else {
+                        sessionStorage.setItem('user', "1")
                     }
                     swal("Success", "Successfully loggedin", "success");
                     document.location.href = "/home";

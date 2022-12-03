@@ -18,14 +18,23 @@ function Navbar() {
     }
     var admin = '';
     var wprofile = '';
+    var wupload = '';
+    var customerUpload = '';
     if (sessionStorage.getItem("admin_email")) {
         admin = (<li className="nav-item">
             <Link exact activeClassName="active  " className="nav-link " aria-current="page" to="/admin">Admin</Link>
         </li>
         )
     }
+    if (sessionStorage.getItem("user") == "1") {
+        customerUpload = (  <li className="nav-item">
+        <NavLink className="nav-link " aria-current="page" to="/upload">Upload</NavLink>
+            </li>
+        )
+    }
     if (sessionStorage.getItem("user") == "2") {
         wprofile =(<NavDropdown.Item href="workers_profile">Work .Profile</NavDropdown.Item>)
+        wupload =(<NavDropdown.Item href="workers_upload">Work .Upload</NavDropdown.Item>)
     }
 
     var AuthButtons = '';
@@ -38,8 +47,6 @@ function Navbar() {
                 <li className="nav-item">
                     <Link exact activeClassName="active" className="nav-link " to="/login">Login</Link>
                 </li>
-
-
             </ul>
         );
     } else {
@@ -52,22 +59,21 @@ function Navbar() {
                 <li className="nav-item">
                     <NavLink exact className="nav-link " to="/profile">Profile</NavLink>
                 </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link " aria-current="page" to="/upload">Upload</NavLink>
-                </li>
+              
                 {/* if (!sessionStorage.getItem("admin_email")) {
                     <li className="nav-item">
                         <NavLink exact activeClassName="active  " className="nav-link " aria-current="page" to="/admin">Admin</NavLink>
                     </li>
                 } */}
+                {customerUpload}
                 {admin}
 
                 <NavDropdown title="Workers" id="basic-nav-dropdown">
                   {wprofile}
+                  {wupload}
                     <NavDropdown.Item href="#action/3.2">
                         Another action
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action/3.4">
                         Separated link

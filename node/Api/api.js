@@ -16,7 +16,7 @@ function register(req, response) {
             response.status(200).send({
                 message: 'Successfully Register'
             });
-            console.log("1 document inserted");
+            // console.log("1 document inserted");
             db.close();
         });
     });
@@ -41,7 +41,7 @@ function login(req, res) {
 }
 
 function profile(req, res) {
-    console.log("profile");
+    // console.log("profile");
     const { email } = req.body;
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -56,7 +56,7 @@ function profile(req, res) {
             } else {
                 res.send({ message: 401 })
             }
-            console.log(result);
+            // console.log(result);
             db.close();
         });
     });
@@ -101,7 +101,7 @@ function admin_edit(req, res) {
         if (err) throw err;
         var dbo = db.db("workers_need");
         var query = { _id: ObjectId(id) };
-        console.log(id);
+        // console.log(id);
         dbo.collection("registration").find(query).toArray(function (err, result) {
             if (err) throw err;
             if (result.length > 0) {
@@ -111,7 +111,7 @@ function admin_edit(req, res) {
             } else {
                 res.send({ message: 401 })
             }
-            console.log(result);
+            // console.log(result);
             db.close();
         });
     });
@@ -137,6 +137,20 @@ function workers_table(req, response) {
     });
 }
 
+
+// //! Use of Multer
+// var storage = multer.diskStorage({
+//     destination: (req, file, callBack) => {
+//         callBack(null, '../reactproject/public/images/')     // './public/images/' directory name where save the file
+//         // callBack(null, './images/')     // './public/images/' directory name where save the file
+//     },
+//     filename: (req, file, callBack) => {
+//         console.log("file original = " + file.originalname);
+//         callBack(null, Date.now() + path.extname(file.originalname))
+//     }
+// });
+
+
 function workers_profile(req, res) {
     const { email } = req.body;
     MongoClient.connect(url, function (err, db) {
@@ -152,7 +166,7 @@ function workers_profile(req, res) {
             } else {
                 res.send({ message: 401 })
             }
-            console.log(result);
+            // console.log(result);
             db.close();
         });
     });
@@ -174,9 +188,24 @@ function workers_profile_submit(req, response) {
         });
     });
 }
+function wokers_image_upload(req, response) {
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("workers_need");
+        var myquery = { email: req.body.email };
+        var newvalues = { $set: { images: req.file.filename } };
+        dbo.collection("workers_table").updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+            response.status(200).send({
+                message: 'Workers Image updated successfully'
+            });
+            db.close();
+        });
+    });
+}
 
 function get_workers(req, res) {
-    console.log("body",req.body);
+    // console.log("body",req.body);
     const { wType } = req.body;
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -191,7 +220,7 @@ function get_workers(req, res) {
             } else {
                 res.send({ message: 401 })
             }
-            console.log("result",result);
+            // console.log("result",result);
             db.close();
         });
     });
@@ -207,4 +236,5 @@ module.exports = {
     workers_profile,
     workers_profile_submit,
     get_workers,
+    wokers_image_upload,
 };

@@ -69,7 +69,7 @@ var storage = multer.diskStorage({
     },
     filename: (req, file, callBack) => {
         console.log("file original = " + file.originalname);
-        callBack(null, Date.now() + path.extname(file.originalname))
+        callBack(null, file.originalname)
     }
 });
 
@@ -92,6 +92,9 @@ app.post('/image_upload', upload.single('image'), (req, response) => {
         });
     });
 });
+app.post('/wokers_image_upload', upload.single('image'), (req, response) => {
+    customApi.wokers_image_upload(req, response);
+});
 
 app.post('/admin', (req, res) => {
     customApi.admin(req, res);
@@ -107,7 +110,7 @@ app.post('/workers_table', (req, response) => {
 app.post('/workers_profile', (req, response) => {
     customApi.workers_profile(req, response);
 });
-app.post('/workers_profile_submit', (req, response) => {
+app.post('/workers_profile_submit', upload.single('image'), (req, response) => {
     console.log("workers_profile_submit");
     customApi.workers_profile_submit(req, response);
 });
@@ -118,12 +121,9 @@ app.post('/get_workers', (req, response) => {
 
 app.post('/delete', (req, res) => {
     const { id } = req.body;
-    // console.log(id);
-
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("workers_need");
-        // var query = { _id: id };
         var query = { _id: ObjectId(id) };
         dbo.collection("registration").deleteOne(query, function (err, obj) {
             if (err) throw err;
