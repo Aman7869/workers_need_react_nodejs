@@ -3,9 +3,19 @@ import React, { useState } from 'react'
 // import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Helmet } from "react-helmet";
+import  {useSelector, useDispatch}  from "react-redux";
 
-function Login() {
-
+function Login() { 
+    const {name, age, status} = useSelector((state)=>{
+        // state.name = registerInput.email;
+        // console.log(state);
+        return state;
+      });
+      const dispatch = useDispatch();
+      const updateName = (name) => {
+        // alert(name);
+        dispatch({type:'UPDATE_NAME', payload:name})
+      }
     // const history = useHistory();
     const [registerInput, setRegister] = useState({
         email: '',
@@ -18,9 +28,7 @@ function Login() {
         e.persist();
         setRegister({ ...registerInput, [e.target.name]: e.target.value });
     }
-
-
-
+  
     const loginSubmit = (e) => {
         e.preventDefault();
         if (validate(registerInput)) {
@@ -29,8 +37,8 @@ function Login() {
                 password: registerInput.password,
             }
             axios.post(`http://localhost:3000/login`, data).then(res => {
-                // alert(res.data.message);
                 if (res.data.message === 400) {
+                    updateName("Aman");
                     sessionStorage.setItem('email', res.data.email);
                     // sessionStorage.setItem('user', "Aman");
                     if (res.data.email === "aman@gmail.com") {

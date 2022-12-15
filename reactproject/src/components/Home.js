@@ -3,8 +3,13 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import  HomeCards  from "./HomeCards";
+import  {useSelector}  from "react-redux";
 
 function Home() {
+  const {name, age, status} = useSelector((state)=>{
+    console.log(state);
+    return state;
+  });
   const navigate = useNavigate();
   if (!sessionStorage.getItem("email")) {
     document.location.href = "/login";

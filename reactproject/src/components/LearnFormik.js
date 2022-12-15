@@ -29,7 +29,7 @@ function LearnFormik() {
             action.resetForm();
         },
     })
-    values.name="Aman";  // for getting data and set to input fields
+    // values.name="Aman";  // for getting data and set to input fields
     return (
         <>
         <div className= "container">

@@ -205,7 +205,6 @@ function wokers_image_upload(req, response) {
 }
 
 function get_workers(req, res) {
-    // console.log("body",req.body);
     const { wType } = req.body;
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -220,7 +219,6 @@ function get_workers(req, res) {
             } else {
                 res.send({ message: 401 })
             }
-            // console.log("result",result);
             db.close();
         });
     });
