@@ -4,17 +4,23 @@ import React, { useState } from 'react'
 import swal from 'sweetalert';
 import { Helmet } from "react-helmet";
 import  {useSelector, useDispatch}  from "react-redux";
+import  {updateStatus}  from "../reducers/actions";
 
 function Login() { 
-    const {name, age, status} = useSelector((state)=>{
+    const {name, age, status, email} = useSelector((state)=>{
         // state.name = registerInput.email;
         // console.log(state);
         return state;
       });
       const dispatch = useDispatch();
-      const updateName = (name) => {
-        // alert(name);
+      const updateReduxValue = (email) => {
+        dispatch({type:'UPDATE_EMAIL', payload:email})
+      }
+      const updateNameValue = (name) => {
         dispatch({type:'UPDATE_NAME', payload:name})
+      }
+      const updateStatusValue = (status) => {
+        dispatch(updateStatus(status))
       }
     // const history = useHistory();
     const [registerInput, setRegister] = useState({
@@ -38,7 +44,8 @@ function Login() {
             }
             axios.post(`http://localhost:3000/login`, data).then(res => {
                 if (res.data.message === 400) {
-                    updateName("Aman");
+                    updateReduxValue(res.data.email);
+                    updateNameValue("Aman");
                     sessionStorage.setItem('email', res.data.email);
                     // sessionStorage.setItem('user', "Aman");
                     if (res.data.email === "aman@gmail.com") {
@@ -112,9 +119,9 @@ function Login() {
                                 <input type="password" name="password" id="password" onChange={handleInput} value={registerInput.password} className="form-control" placeholder="Enter password" />
                                 <span className="text-danger">{formErrors.password}</span>
                             </div>
-                            <input type="submit" value="Login" className="btn btn-primary col-sm-5" style={{ marginLeft: "100px" }} />
-
+                            <input type="submit" value="Login" className="btn btn-primary col-sm-5" style={{ marginLeft: "100px" }} />  
                             <br />
+                            {/* <button onClick={()=>updateStatusValue("software developer")}>update status</button> */}
 
                         </form>
                     </div>
